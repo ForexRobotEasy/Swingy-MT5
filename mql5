@@ -1,0 +1,88 @@
+
+//+------------------------------------------------------------------+
+//|                                                   Swingy MT5.mq5 |
+//|                   Copyright 2023, Forex Robot Easy Team          |
+//|                      https://www.forexroboteasy.com               |
+//+------------------------------------------------------------------+
+#property strict
+
+// List of currency pairs to trade
+string[] currencyPairs = {'EURUSD', 'GBPUSD', 'USDJPY', 'AUDJPY', 'AUDUSD', 'EURAUD', 'EURCAD', 'EURGBP', 'EURJPY', 'GBPJPY', 'USDCAD', 'USDCHF'};
+
+// Support and resistance levels
+double supportLevel = 1.2000;
+double resistanceLevel = 1.3000;
+
+// Minimum profit required per trade
+int minProfitPips = 20;
+
+//+------------------------------------------------------------------+
+//| Expert initialization function                                   |
+//+------------------------------------------------------------------+
+int OnInit()
+{
+   // Add necessary code for initialization here
+   return(INIT_SUCCEEDED);
+}
+
+//+------------------------------------------------------------------+
+//| Expert tick function                                             |
+//+------------------------------------------------------------------+
+void OnTick()
+{
+   // Check if any currency pair is in a breakout
+   for(int i = 0; i < ArraySize(currencyPairs); i++)
+   {
+      double currentPrice = SymbolInfoDouble(currencyPairs[i], SYMBOL_BID);
+      
+      // Check if the price broke above the resistance level
+      if(currentPrice > resistanceLevel)
+      {
+         // Add necessary code to execute the breakout strategy
+         // ...
+
+         // Calculate the profit in pips
+         double profitPips = (currentPrice - resistanceLevel) / Point;
+         
+         // Check if the profit meets the minimum requirement
+         if(profitPips >= minProfitPips)
+         {
+            // Add necessary code to place a trade
+            // ...
+
+            // Log the trade information
+            Print('Trade opened for ', currencyPairs[i], ' at price ', currentPrice, ' with a profit of ', profitPips, ' pips');
+         }
+      }
+      
+      // Check if the price broke below the support level
+      if(currentPrice < supportLevel)
+      {
+         // Add necessary code to execute the breakout strategy
+         // ...
+
+         // Calculate the profit in pips
+         double profitPips = (supportLevel - currentPrice) / Point;
+         
+         // Check if the profit meets the minimum requirement
+         if(profitPips >= minProfitPips)
+         {
+            // Add necessary code to place a trade
+            // ...
+
+            // Log the trade information
+            Print('Trade opened for ', currencyPairs[i], ' at price ', currentPrice, ' with a profit of ', profitPips, ' pips');
+         }
+      }
+   }
+}
+
+//+------------------------------------------------------------------+
+//| Expert deinitialization function                                 |
+//+------------------------------------------------------------------+
+void OnDeinit(const int reason)
+{
+   // Add necessary code for deinitialization here
+}
+
+//+------------------------------------------------------------------+
